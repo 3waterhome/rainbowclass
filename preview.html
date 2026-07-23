@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>彩虹班的小小回憶禮物</title>
+
+<style>
+body{
+  margin:0;
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  background:linear-gradient(180deg,#fff8c9,#ffe0f0,#dff7ff);
+  color:#4a3b2f;
+  text-align:center;
+}
+
+section{
+  min-height:100vh;
+  padding:45px 20px;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+h1{font-size:34px;color:#ff7a00;}
+h2{font-size:28px;color:#ff6f91;}
+p{font-size:20px;line-height:1.8;}
+
+.card{
+  background:white;
+  border-radius:30px;
+  padding:25px;
+  max-width:560px;
+  width:90%;
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  border:5px dashed #ffd36e;
+}
+
+button{
+  margin-top:20px;
+  background:#ff9f1c;
+  color:white;
+  border:none;
+  padding:15px 28px;
+  border-radius:40px;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 5px 0 #d97800;
+}
+
+.rainbow{
+  font-size:60px;
+  animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-12px);}
+}
+
+.star{
+  position:fixed;
+  font-size:24px;
+  animation:float 5s infinite;
+  opacity:0.75;
+  z-index:1;
+  pointer-events:none;
+}
+
+.s1{top:10%; left:8%;}
+.s2{top:25%; right:10%;}
+.s3{bottom:20%; left:12%;}
+.s4{bottom:12%; right:15%;}
+
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-20px) rotate(15deg);}
+}
+
+.slider-box{
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  margin-top:15px;
+  background:#fff3c4;
+}
+
+.slider{
+  display:flex;
+  transition:transform 0.5s ease;
+}
+
+.slider img{
+  min-width:100%;
+  width:100%;
+  height:360px;
+  object-fit:cover;
+  border-radius:22px;
+  cursor:pointer;
+}
+
+.counter{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:rgba(0,0,0,0.55);
+  color:white;
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:16px;
+  z-index:3;
+}
+
+.arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,0.85);
+  border:none;
+  font-size:28px;
+  border-radius:50%;
+  width:42px;
+  height:42px;
+  cursor:pointer;
+  color:#ff7a00;
+  z-index:3;
+  margin:0;
+  padding:0;
+  box-shadow:none;
+}
+
+.prev{left:10px;}
+.next{right:10px;}
+
+.dots{
+  margin-top:15px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:7px;
+}
+
+.dot{
+  width:11px;
+  height:11px;
+  background:#ffd36e;
+  border-radius:50%;
+  opacity:0.35;
+  cursor:pointer;
+}
+
+.dot.active{
+  opacity:1;
+  background:#ff7a00;
+  transform:scale(1.25);
+}
+
+.lightbox{
+  display:none;
+  position:fixed;
+  z-index:999;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.92);
+  justify-content:center;
+  align-items:center;
+}
+
+.lightbox img{
+  max-width:92%;
+  max-height:85%;
+  border-radius:20px;
+}
+
+.close{
+  position:absolute;
+  top:25px;
+  right:30px;
+  color:white;
+  font-size:42px;
+  cursor:pointer;
+}
+
+.youtube-box{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  margin-top:15px;
+  overflow:hidden;
+  border-radius:22px;
+  background:#000;
+  box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+.youtube-box iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.brand-card{
+  background:rgba(255,255,255,0.96);
+  border:5px dashed #9edfff;
+}
+
+.brand-intro{
+  font-size:19px;
+  line-height:1.9;
+}
+
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:22px 0;
+}
+
+.service-item{
+  padding:15px 10px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fff8cf,#ffe9f3);
+  font-size:17px;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.brand-divider{
+  margin:25px 0;
+  border:0;
+  border-top:2px dashed #ffd36e;
+}
+
+.brand-title{
+  color:#ff7a00;
+  font-size:22px;
+  margin-bottom:8px;
+}
+
+.brand-buttons{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  margin-top:22px;
+}
+
+.brand-link{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:58px;
+  padding:10px 14px;
+  border-radius:18px;
+  color:#fff;
+  text-decoration:none;
+  font-size:17px;
+  font-weight:bold;
+  box-sizing:border-box;
+  box-shadow:0 5px 0 rgba(0,0,0,0.18);
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.brand-link:hover{
+  transform:translateY(-2px);
+  box-shadow:0 7px 0 rgba(0,0,0,0.16);
+}
+
+.brand-link:active{
+  transform:translateY(3px);
+  box-shadow:0 2px 0 rgba(0,0,0,0.18);
+}
+
+.ginshius{background:linear-gradient(135deg,#b86b32,#e99a55);}
+.robot123{background:linear-gradient(135deg,#2676db,#51a8ff);}
+.works{background:linear-gradient(135deg,#ee6d9f,#ff9dbc);}
+.contact{background:linear-gradient(135deg,#35a96b,#65ca8e);}
+
+.brand-note{
+  margin-top:24px;
+  font-size:15px;
+  color:#75675d;
+}
+
+.footer-credit{
+  margin-top:22px;
+  font-size:15px;
+  color:#7b6c61;
+  line-height:1.7;
+}
+
+@media(max-width:420px){
+  .brand-buttons,
+  .service-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:600px){
+  h1{font-size:30px;}
+  h2{font-size:24px;}
+  p{font-size:18px;}
+  .slider img{height:280px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="star s1">⭐</div>
+<div class="star s2">🎈</div>
+<div class="star s3">🌟</div>
+<div class="star s4">☁️</div>
+
+<section>
+  <div class="rainbow">🌈</div>
+  <h1>送給彩虹班的小小回憶禮物</h1>
+  <p>
+    謝謝每一位彩虹班小朋友，<br>
+    陪伴珊語一起玩、一起笑、一起長大。
+  </p>
+  <button onclick="document.getElementById('photo').scrollIntoView({behavior:'smooth'})">
+    📖 打開回憶禮物
+  </button>
+</section>
+
+<section id="photo">
+  <div class="card">
+    <h2>📸 彩虹班的快樂時光</h2>
+    <p>12 張照片，收藏我們一起長大的小小回憶。</p>
+
+    <div class="slider-box" id="sliderBox">
+      <div class="counter" id="counter">第 1 / 12 張</div>
+
+      <div class="slider" id="slider">
+        <img src="photo1.jpg" onclick="openLightbox(this.src)">
+        <img src="photo2.jpg" onclick="openLightbox(this.src)">
+        <img src="photo3.jpg" onclick="openLightbox(this.src)">
+        <img src="photo4.jpg" onclick="openLightbox(this.src)">
+        <img src="photo5.jpg" onclick="openLightbox(this.src)">
+        <img src="photo6.jpg" onclick="openLightbox(this.src)">
+        <img src="photo7.jpg" onclick="openLightbox(this.src)">
+        <img src="photo8.jpg" onclick="openLightbox(this.src)">
+        <img src="photo9.jpg" onclick="openLightbox(this.src)">
+        <img src="photo10.jpg" onclick="openLightbox(this.src)">
+        <img src="photo11.jpg" onclick="openLightbox(this.src)">
+        <img src="photo12.jpg" onclick="openLightbox(this.src)">
+      </div>
+
+      <button class="arrow prev" onclick="prevSlide()">‹</button>
+      <button class="arrow next" onclick="nextSlide()">›</button>
+    </div>
+
+    <div class="dots">
+      <span class="dot active" onclick="goSlide(0)"></span>
+      <span class="dot" onclick="goSlide(1)"></span>
+      <span class="dot" onclick="goSlide(2)"></span>
+      <span class="dot" onclick="goSlide(3)"></span>
+      <span class="dot" onclick="goSlide(4)"></span>
+      <span class="dot" onclick="goSlide(5)"></span>
+      <span class="dot" onclick="goSlide(6)"></span>
+      <span class="dot" onclick="goSlide(7)"></span>
+      <span class="dot" onclick="goSlide(8)"></span>
+      <span class="dot" onclick="goSlide(9)"></span>
+      <span class="dot" onclick="goSlide(10)"></span>
+      <span class="dot" onclick="goSlide(11)"></span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>💌 給彩虹班寶貝們</h2>
+    <p>
+      親愛的彩虹班小朋友們：<br><br>
+      謝謝你們陪伴珊語度過這麼可愛的一年。<br>
+      因為有你們，一起上學的日子變得更熱鬧、更溫暖。<br><br>
+      一起玩玩具、一起聽故事、一起排隊、一起學習，<br>
+      每一個笑容，都是最珍貴的回憶。<br><br>
+      希望你們長大後，還會記得彩虹班這段甜甜的時光。<br>
+      祝福每一位小朋友都平安、健康、快樂長大。<br><br>
+      ❤️ 珊語的爸爸媽媽 敬上
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>🎬一起創造的美好回憶</h2>
+<div class="youtube-box">
+      <iframe
+        src="https://www.youtube.com/embed/ozPJnCtftJQ"
+        title="一起創造的美好回憶"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
+
+<section id="brand">
+  <div class="card brand-card">
+    <div class="rainbow">🌿</div>
+    <h2>留住每一份珍貴回憶</h2>
+
+    <p class="brand-intro">
+      一份小小的 NFC 紀念禮物，<br>
+      不只是鑰匙圈，更是一把打開回憶的鑰匙。<br><br>
+      只要用手機輕輕一碰，<br>
+      就能再次看見照片、影片與最珍貴的祝福。
+    </p>
+
+    <div class="service-grid">
+      <div class="service-item">👶 出生紀念</div>
+      <div class="service-item">🎓 畢業紀念</div>
+      <div class="service-item">📷 寫真收藏</div>
+      <div class="service-item">🚗 活動紀念</div>
+      <div class="service-item">🎂 生日禮物</div>
+      <div class="service-item">💝 專屬客製</div>
+    </div>
+
+    <hr class="brand-divider">
+
+    <div class="brand-title">京水工作室 × 123機器人</div>
+    <p>
+      客製化雷射雕刻、木作與 NFC 創意商品，<br>
+      把照片、影片與祝福，收藏進一份可以帶著走的禮物。
+    </p>
+
+    <div class="brand-buttons">
+      <a class="brand-link ginshius"
+         href="https://www.facebook.com/GinShius"
+         target="_blank"
+         rel="noopener noreferrer">
+        🪵 京水工作室
+      </a>
+
+      <a class="brand-link robot123"
+         href="https://www.facebook.com/awater.robot"
+         target="_blank"
+         rel="noopener noreferrer">
+        🤖 123機器人
+      </a>
+
+      <a class="brand-link works"
+         href="https://www.facebook.com/GinShius"
+         target="_blank"
+         rel="noopener noreferrer">
+        📷 查看更多作品
+      </a>
+
+      <a class="brand-link contact"
+         href="https://m.me/GinShius"
+         target="_blank"
+         rel="noopener noreferrer">
+        💬 聯絡我們
+      </a>
+    </div>
+
+    <p class="brand-note">
+      幼兒園紀念・出生紀念・寫真紀念・活動紀念<br>
+      歡迎私訊討論專屬於你的客製內容。
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="rainbow">🎁</div>
+  <h2>謝謝彩虹班的每一位小朋友</h2>
+  <p>
+    謝謝你們陪伴珊語一起成長。<br>
+    願大家都像彩虹一樣，閃閃發光、快樂長大！
+  </p>
+  <p>🌈 彩虹班永遠是最可愛的回憶 🌈</p>
+
+  <div class="footer-credit">
+    Made with ❤️ by 京水工作室 × 123機器人<br>
+    客製化 NFC 紀念商品，讓每一份回憶都值得收藏。
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="close">&times;</span>
+  <img id="lightboxImg" src="">
+</div>
+
+<script>
+let currentIndex = 0;
+const totalSlides = 12;
+
+const slider = document.getElementById("slider");
+const counter = document.getElementById("counter");
+const dots = document.querySelectorAll(".dot");
+const sliderBox = document.getElementById("sliderBox");
+
+function updateSlide(){
+  slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+  counter.innerText = `第 ${currentIndex + 1} / ${totalSlides} 張`;
+
+  dots.forEach((dot,index)=>{
+    dot.classList.toggle("active", index === currentIndex);
+  });
+}
+
+function nextSlide(){
+  currentIndex = (currentIndex + 1) % totalSlides;
+  updateSlide();
+}
+
+function prevSlide(){
+  currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+  updateSlide();
+}
+
+function goSlide(index){
+  currentIndex = index;
+  updateSlide();
+  resetAutoPlay();
+}
+
+let autoPlay = setInterval(nextSlide, 3000);
+
+function resetAutoPlay(){
+  clearInterval(autoPlay);
+  autoPlay = setInterval(nextSlide, 3000);
+}
+
+let startX = 0;
+
+sliderBox.addEventListener("touchstart", function(e){
+  startX = e.touches[0].clientX;
+});
+
+sliderBox.addEventListener("touchend", function(e){
+  let endX = e.changedTouches[0].clientX;
+
+  if(startX - endX > 50){
+    nextSlide();
+    resetAutoPlay();
+  }else if(endX - startX > 50){
+    prevSlide();
+    resetAutoPlay();
+  }
+});
+
+function openLightbox(src){
+  document.getElementById("lightbox").style.display = "flex";
+  document.getElementById("lightboxImg").src = src;
+  clearInterval(autoPlay);
+}
+
+function closeLightbox(){
+  document.getElementById("lightbox").style.display = "none";
+  resetAutoPlay();
+}
+</script>
+
+</body>
+</html>
